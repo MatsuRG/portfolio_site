@@ -1,0 +1,464 @@
+$navy: #1C293F;
+$ywhite: #FDFBF7;
+$yGray: #CCCAC7;
+
+$pc: 1200px; // PC
+$tab: 768px; // タブレット
+$sp: 480px;  // スマホ
+
+@mixin pc {
+    @media (max-width: ($pc)) {
+        @content;
+    }
+}
+@mixin tab {
+    @media (max-width: ($tab)) {
+        @content;
+    }
+}
+@mixin sp {
+    @media (max-width: ($sp)) {
+        @content;
+    }
+}
+
+@import "sanitize.css";
+// 筆記体フォント import
+@import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
+
+body {
+    font-family: 
+        "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+    width: 100%;
+    height: 100vh;
+    background-color: $ywhite;
+    color: $navy;
+}
+
+//共有クラス - start
+.flx { //flexboxによる上下左右中央ぞろえ
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fixed-bar { //左右の固定バー
+    width: 80px;
+    height: 100vh;
+
+    flex-direction: column;
+    row-gap: 15px;
+    position: fixed;
+
+    @include tab {
+        width: 60px;
+    };
+    @include sp {
+        display: none;
+    };
+}
+.decoration {//各セクションの装飾
+    margin: 0;
+    font-family: 'Damion', cursive;
+    font-weight: normal;
+    font-size: 200px;
+    @include sp() {
+        font-size: 150px;
+        bottom: 10%;
+        right: 5%;
+    }
+    color: $yGray;
+    opacity: .2;
+}
+//共有クラス - end
+
+.right-nav {
+    top: 0;
+    right: 0;
+    z-index: 3;
+
+    & ion-icon {
+        font-size: 32px;
+        padding: 5px;
+        transition: padding .5s;
+        cursor: pointer;
+
+        &:hover {
+            padding: 15px;
+        }
+    }
+    & span {
+        display: inline-block;
+        width: 1px;
+        height: 30px;
+        background-color: $navy;
+    }
+}
+// 左に固定するバー
+.left-bar {
+    & h3 {
+        writing-mode: vertical-rl;
+        letter-spacing: 16px;
+        font-size: 16px;
+    }
+    & .scroll-animation {
+        flex-direction: column;
+        row-gap: 10px;
+
+        & p {
+            &:nth-child(1) {
+                transform: rotate(90deg);
+            }
+            &:nth-child(2) {
+                height: 1.5px;
+                width: 60px;
+                margin-right: 1px;
+                background-color: $navy;
+                transform: rotate(90deg);
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    height: 7px;
+                    width: 7px;
+                    border-radius: 50%;
+                    background-color: $navy;
+                    animation: kf-scroll-animate 1.5s ease-in-out infinite;
+                }
+            }
+        }
+    }
+}
+@keyframes kf-scroll-animate {
+    0% {
+        transform: translate(0px, -40%);
+    }
+    100% {
+        transform: translate(55px, -40%);
+    }
+}
+
+main {
+    padding-bottom: 300px;
+}
+
+// ページトップ
+.top {
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    row-gap: 15px;
+
+    & h1 {
+        font-size: 36px;
+        @include tab {
+            font-size: 32px;
+        };
+        letter-spacing: 5px;
+        margin: 0;
+        margin-top: 30px;
+        position: relative;
+        &::before {
+            content: "Welcome";
+            font-family: 'Damion', cursive;
+            font-size: 72px;
+            color: $yGray;
+            position: absolute;
+            top: -50px;
+            left: -20%;
+            @include tab {
+                font-size: 64px;
+                left: -4%;
+            };
+            z-index: -1;
+        }
+    }
+    & span {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 16px;
+        @include tab {
+            letter-spacing: 12px;
+        };
+        @include sp {
+            letter-spacing: 8px;
+        };
+    }
+}
+
+// about -start
+.about {
+    width: 100%;
+    height: 450px;
+    margin-bottom: 150px;
+
+    @include tab() {
+        height: 550px;
+    }
+
+    & .container {
+        width: 80%;
+        @include sp{
+            width: 100%;
+        }
+        max-width: 1000px;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        & .title {
+            max-width: 460px;
+            max-height: 230px;
+            width: 65%;
+            @include tab() {
+                max-width: 100%;
+                width: 100%;
+            }
+            height: 55%;
+            background-color: $navy;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            & > div {
+                width: 80%;
+                height: 80%;
+                align-items: flex-start;
+                flex-direction: column;
+                row-gap: 35px;
+                color: $ywhite;
+
+                & h1 {
+                    font-size: 48px;
+                    @include tab() {
+                        font-size: 40px;
+                    }
+                    @include sp() {
+                        font-size: 32px;
+                    }
+                    font-weight: bold;
+                    margin: 0;
+                }
+                & h2 {
+                    font-size: 24px;
+                    @include tab() {
+                        font-size: 20px;
+                    }
+                    letter-spacing: 3px;
+                    font-weight: bold;
+                    margin: 0;
+                    position: relative;
+
+                    &::before {
+                        content: "松浦 豪毅";
+                        font-size: 16px;
+                        @include sp() {
+                            font-size: 14px;
+                        }
+                        letter-spacing: 5px;
+                        font-weight: bold;
+                        position: absolute;
+                        left: 0;
+                        top: -20px;
+                    }
+                }
+            }
+        }
+        & .content {
+            max-width: 600px;
+            max-height: 320px;
+            width: 65%;
+            @include tab() {
+                max-width: 100%;
+                width: 100%;
+            }
+            height: 60%;
+            background-color: white;
+            color: $navy;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+
+            & > div {
+                width: 70%;
+                height: 70%;
+                align-items: flex-start;
+                flex-direction: column;
+                row-gap: 35px;
+
+                & p {
+                    display: inline-block;
+                    margin: 0;
+                    letter-spacing: 1px;
+                    font-size: 16px;
+                    @include sp() {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+    .about-dec {
+        position: absolute;
+        bottom: -10%;
+        right: -10%;
+        @include sp(){
+            right: 0%;
+        }
+    }
+}
+// about -end
+
+// production -start
+.production {
+    width: 80%;
+    @include sp() {
+        width: 100%;
+    }
+    margin: 0 auto;
+
+    & h1 {
+        font-size: 48px;
+        @include tab() {
+            font-size: 40px;
+        }
+        @include sp() {
+            font-size: 32px;
+        }
+        font-weight: bold;
+        text-align: center;
+        color: $navy;
+        margin: 0;
+    }
+    & h2 {
+        font-size: 16px;
+        @include sp() {
+            font-size: 14px;
+        }
+        font-weight: bold;
+        text-align: center;
+        color: $navy;
+        margin: 0;
+        margin-bottom: 30px;
+    }
+
+    & .production-items {
+        position: relative;
+
+        width: 80%;
+        @include tab() {
+            width: 100%;
+        }
+        max-width: 1000px;
+        margin: 0 auto;
+        
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        row-gap: 50px;
+        @include tab() {
+            row-gap: 45px;
+        }
+
+        // 制作物の1かたまり
+        & .item {
+            width: 45%;
+            @include tab() {
+                width: 100%;
+            }
+            @include sp() {
+                width: 95%;
+                margin: 0 auto;
+            }
+            
+            border-radius: 10px;
+            box-shadow: 0 5px 5px rgba(204, 202, 199, .5);
+
+            //制作物の画像
+            & .img-wrap {
+                width: 100%;
+
+                & img {
+                    width: 100%;
+                    min-height: 300px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+            }
+        }
+        //制作物の内容
+        & .content {
+            padding: 35px 45px;
+            color: $navy;
+
+            & a {
+                text-decoration: none;
+                color: $navy;
+
+                & > p {
+                    font-size: 14px;
+                    margin: 0;
+                    margin-bottom: 30px;
+                }
+                & > h1 {
+                    margin: 0;
+                    font-size: 24px;
+                    @include sp() {
+                        font-size: 20px;
+                    }
+                    font-weight: 500;
+                    text-align: left;
+                }
+            }
+            & h2 {
+                margin: 0;
+                margin-bottom: 30px;
+                font-size: 16px;
+                @include sp() {
+                    font-size: 14px;
+                }
+                font-weight: 500;
+                text-align: left;
+            }
+            & > p {
+                margin: 0;
+                display: inline-block;
+                font-size: 16px;
+                @include sp() {
+                    font-size: 14px;
+                }
+                text-align: left;
+            }
+        }
+        //制作物下部の番号
+        & .number {
+            margin: 0;
+            padding:25px 45px 40px;
+            font-size: 38px;
+            color: $yGray;
+            text-align: right;
+            @include tab() {
+                font-size: 35px;
+            }
+            @include sp() {
+                font-size: 30px;
+            }
+        }
+
+        & .production-dec {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            @include tab() {
+                font-size: 150px;
+            }
+            @include sp() {
+                font-size: 125px;
+            }
+            z-index: -1;
+        }
+    }
+}
+// production -start
